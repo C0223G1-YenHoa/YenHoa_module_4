@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <!--    Noi cho spring biet se quet component o package nao-->
-    <context:component-scan base-package="com.codegym.springmvc"/>
+    <context:component-scan base-package="com.example.ex1"/>
 
     <mvc:annotation-driven/>
 

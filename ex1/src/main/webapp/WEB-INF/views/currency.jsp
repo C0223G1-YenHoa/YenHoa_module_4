@@ -6,19 +6,25 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-<form name="currency_converter" action="/currency" method="get">
-    <div>
-        <input name="money" type="number">
-        <input type="submit" value="submit">
-    </div>
-    <div>
-        Result: <input name="result">
-    </div>
+<form action="/currency" method="get">
+    <fieldset>
+        <legend>CHUYỂN ĐỔI TIỀN TỆ</legend>
+        <div>
+            <input name="money" type="number" placeholder="Nhập tiền">
+            <input name="rate" type="number" placeholder="Tỷ giá">
+            <input type="submit" value="submit">
+        </div>
+        <div>
+            Result:
+            <fmt:formatNumber type="number" maxFractionDigits="3" value="${money}"/>
+        </div>
+    </fieldset>
 </form>
 </body>
 </html>
