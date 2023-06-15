@@ -20,7 +20,7 @@ public class CurrencyController {
 
     @PostMapping("/currency")
     public String changedMoney(@RequestParam Float money, @RequestParam Float rate, Model model) {
-        model.addAttribute("money",currencyService.convert(money,rate));
+        model.addAttribute("money", currencyService.convert(money, rate));
         return "currency";
     }
 }
