@@ -12,12 +12,12 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/currency" method="get">
+<form action="/currency" method="post">
     <fieldset>
         <legend>CHUYỂN ĐỔI TIỀN TỆ</legend>
         <div>
-            <input name="money" type="number" placeholder="Nhập tiền">
-            <input name="rate" type="number" placeholder="Tỷ giá">
+            <input name="money" type="number" placeholder="Nhập tiền" min="1" required>
+            <input name="rate" type="number" placeholder="Tỷ giá" required min="1">
             <input type="submit" value="submit">
         </div>
         <div>
