@@ -29,7 +29,7 @@ public class DictionaryController {
         if (dictionaryService.translate(word) != null) {
             model.addAttribute("mean", dictionaryService.translate(word));
         } else
-            model.addAttribute("notfound", "NOT FOUND");
+            model.addAttribute("notfound", "NOT FOUND THIS WORD");
         return "translate";
     }
 }
