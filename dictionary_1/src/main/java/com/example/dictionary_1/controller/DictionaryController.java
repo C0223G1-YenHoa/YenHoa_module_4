@@ -28,7 +28,6 @@ public class DictionaryController {
     public String translate(@RequestParam String word, Model model) {
         if (dictionaryService.translate(word) != null) {
             model.addAttribute("mean", dictionaryService.translate(word));
-            return "translate";
         } else
             model.addAttribute("notfound", "NOT FOUND");
         return "translate";
