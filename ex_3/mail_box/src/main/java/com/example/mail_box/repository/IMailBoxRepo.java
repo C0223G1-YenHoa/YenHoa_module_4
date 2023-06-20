@@ -1,4 +1,4 @@
-package com.example.mail_box.Repository;
+package com.example.mail_box.repository;
 
 import com.example.mail_box.model.MailBox;
 

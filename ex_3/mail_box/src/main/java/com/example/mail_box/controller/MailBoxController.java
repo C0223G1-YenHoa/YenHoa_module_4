@@ -5,13 +5,14 @@ import com.example.mail_box.service.IMailBoxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MailBoxController {
     @Autowired
-    IMailBoxService mailBoxService;
+    private IMailBoxService mailBoxService;
 
     @GetMapping("")
     public String mailBox(Model model) {
@@ -28,7 +29,6 @@ public class MailBoxController {
         modelAndView.addObject("pageSizes",mailBoxService.getPageSize());
         return modelAndView;
     }
-
 
     @PostMapping("/update")
     public String updateMail(@ModelAttribute MailBox mailBox) {

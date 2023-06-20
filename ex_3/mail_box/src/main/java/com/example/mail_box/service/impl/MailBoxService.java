@@ -1,6 +1,6 @@
 package com.example.mail_box.service.impl;
 
-import com.example.mail_box.Repository.IMailBoxRepo;
+import com.example.mail_box.repository.IMailBoxRepo;
 import com.example.mail_box.model.MailBox;
 import com.example.mail_box.service.IMailBoxService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
-package com.example.mail_box.Repository.impl;
+package com.example.mail_box.repository.impl;
 
-import com.example.mail_box.Repository.IMailBoxRepo;
+import com.example.mail_box.repository.IMailBoxRepo;
 import com.example.mail_box.model.MailBox;
 import org.springframework.stereotype.Repository;
 
