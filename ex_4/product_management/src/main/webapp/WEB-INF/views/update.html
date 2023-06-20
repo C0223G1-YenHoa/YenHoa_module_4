@@ -3,42 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Product</title>
+    <style>
+        table, tr, th, td {
+            border-collapse: collapse;
+            border: solid black 1px;
+        }
+        textarea{
+            width: 200px;
+        }
+    </style>
 </head>
 <body>
-<form th:action="@{/create}" th:object="${product}" method="post">
+<form th:action="@{/update}" th:object="${product}" method="post">
     <table>
         <tr>
             <th>ID</th>
             <td>
-                <input type="number" th:field="*{id}">
+                <textarea readonly th:field="*{id}" ></textarea>
             </td>
         </tr>
         <tr>
             <th>Product Name</th>
             <td>
-                <input type="text" th:field="*{name}">
+                <textarea type="text" th:field="*{name}" ></textarea>
             </td>
         </tr>
         <tr>
             <th>Price</th>
             <td>
-                <input type="number" th:field="*{price}">
+                <input type="number" th:field="*{price}" >
             </td>
         </tr>
         <tr>
             <th>Description</th>
             <td>
-                <input type="text" th:field="*{description}">
+                <input type="text" th:field="*{description}" >
             </td>
         </tr>
         <tr>
             <th>Manufacture</th>
             <td>
-                <input type="text" th:field="*{manufacture}">
+                <input type="text" th:field="*{manufacture}" >
             </td>
         </tr>
         <tr>
-            <button type="submit">Submit</button>
+            <button type="submit">Update</button>
+            <button><a  th:href="@{/}">Back</a></button>
+
         </tr>
     </table>
 </form>
