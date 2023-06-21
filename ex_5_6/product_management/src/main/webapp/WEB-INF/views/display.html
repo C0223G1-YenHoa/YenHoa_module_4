@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+    <style>
+        table, tr, th, td {
+            border-collapse: collapse;
+            border: solid black 1px;
+        }
+    </style>
+</head>
+<body>
+<h1>PRODUCT LIST</h1>
+<table>
+    <tr>
+        <form action="/products/search" method="get">
+            <input name="search_name" placeholder="Enter product name">
+            <button type="submit">Search</button>
+        </form>
+    </tr>
+    <br>
+    <br>
+    <tr>
+
+        <button>
+            <a href="/products/showCreateForm">
+                Create new product
+            </a>
+        </button>
+
+    </tr>
+    <br>
+    <br>
+    <p style="color: red" th:text="${msg}"></p>
+    <br>
+    <br>
+    <tr>
+        <th>STT</th>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Manufacture</th>
+    </tr>
+    <tr th:each="product, item : ${products}">
+        <td th:text="${item.count}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.manufacture}"></td>
+        <td>
+            <button><a th:href="@{/products/delete/{id}(id=${product.id})}">Delete</a></button>
+            <button><a th:href="@{/products/detail/{id}(id=${product.id})}">Detail</a></button>
+            <button><a th:href="@{/products/showUpdateForm/{id}(id=${product.id})}">Update</a></button>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
