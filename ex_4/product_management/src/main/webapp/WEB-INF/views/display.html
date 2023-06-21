@@ -14,7 +14,7 @@
 <h1>PRODUCT LIST</h1>
 <table>
     <tr>
-        <form action="/search" method="get">
+        <form action="/products/search" method="get">
             <input name="search_name" placeholder="Enter product name">
             <button type="submit">Search</button>
         </form>
@@ -24,7 +24,7 @@
     <tr>
 
         <button>
-            <a href="/showCreateForm">
+            <a href="/products/showCreateForm">
                 Create new product
             </a>
         </button>
@@ -32,7 +32,7 @@
     </tr>
     <br>
     <br>
-    <p style="color: greenyellow" th:text="${msg}"></p>
+    <p style="color: red" th:text="${msg}"></p>
     <br>
     <br>
     <tr>
@@ -49,9 +49,9 @@
         <td th:text="${product.description}"></td>
         <td th:text="${product.manufacture}"></td>
         <td>
-            <button><a th:href="@{/delete/{id}(id=${product.id})}">Delete</a></button>
-            <button><a th:href="@{/detail/{id}(id=${product.id})}">Detail</a></button>
-            <button><a th:href="@{/showUpdateForm/{id}(id=${product.id})}">Update</a></button>
+            <button><a th:href="@{/products/delete/{id}(id=${product.id})}">Delete</a></button>
+            <button><a th:href="@{/products/detail/{id}(id=${product.id})}">Detail</a></button>
+            <button><a th:href="@{/products/showUpdateForm/{id}(id=${product.id})}">Update</a></button>
         </td>
     </tr>
 </table>

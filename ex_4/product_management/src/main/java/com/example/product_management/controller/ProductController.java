@@ -10,11 +10,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
+@RequestMapping("/products")
 public class ProductController {
     @Autowired
     private IProductService productService;
 
-    @GetMapping("")
+    @GetMapping("/products")
     public String product(Model model) {
         model.addAttribute("products", productService.getProducts());
         return "/display";

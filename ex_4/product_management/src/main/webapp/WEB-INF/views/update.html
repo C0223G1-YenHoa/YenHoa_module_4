@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-<form th:action="@{/update}" th:object="${product}" method="post">
+<form th:action="@{/products/update}" th:object="${product}" method="post">
     <table>
         <tr>
             <th>ID</th>
@@ -48,7 +48,7 @@
         </tr>
         <tr>
             <button type="submit">Update</button>
-            <button><a  th:href="@{/}">Back</a></button>
+            <button><a  th:href="@{/products}">Back</a></button>
 
         </tr>
     </table>

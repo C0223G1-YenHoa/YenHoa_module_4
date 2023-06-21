@@ -9,6 +9,8 @@ import java.util.List;
 
 @Repository
 public class ProductRepo implements IProductRepo {
+    private static final String SELECT_ALL="from Product";
+
     private static List<Product> products=new ArrayList<>();
     static {
         products.add(new Product(1,"SamSung Note 9",12000,"Super AMOLED 6.4 Quad HD+ (2K+)","Sam Sung"));

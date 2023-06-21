@@ -1,5 +1,6 @@
 package com.example.product_management.model;
 
+
 public class Product {
     private int id;
     private String name;
