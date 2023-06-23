@@ -4,18 +4,20 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="blog")
+@Table(name = "blog")
 public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private LocalDate date;
     private String title;
+    @Column(columnDefinition = "LongText")
     private String content;
     private String image;
 
     public Blog() {
     }
+
 
     public Blog(int id, LocalDate date, String title, String content, String image) {
         this.id = id;

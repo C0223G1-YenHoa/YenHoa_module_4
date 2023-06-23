@@ -8,13 +8,14 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+
 @Service
-public class BlogService implements IBlogService{
+public class BlogService implements IBlogService {
     @Autowired
-    IBlogRepo blogRepo;
+    private IBlogRepo blogRepo;
 
     @Override
-    public List<Blog>  getBlogs(){
+    public List<Blog> getBlogs() {
         return this.blogRepo.findAll();
     }
 
@@ -35,15 +36,15 @@ public class BlogService implements IBlogService{
     }
 
     @Override
-    public List<Blog> search(String name,LocalDate date) {
-        return this.blogRepo.findByTitleContainingAndDateContains(name,date);
+    public List<Blog> search(String name, LocalDate date) {
+        return this.blogRepo.findByTitleContainingAndDateContains(name, date);
     }
 
     @Override
     public Blog findById(int id) {
-        try{
-          return   this.blogRepo.findById(id).get();
-        }catch (IllegalArgumentException e){
+        try {
+            return this.blogRepo.findById(id).get();
+        } catch (IllegalArgumentException e) {
             return null;
         }
     }

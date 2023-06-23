@@ -9,13 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/blog")
 public class BlogController {
     @Autowired
-    IBlogService blogService;
+    private IBlogService blogService;
 
     @GetMapping("")
     public String blog(Model model) {
@@ -65,8 +64,9 @@ public class BlogController {
         redirectAttributes.addFlashAttribute("msg", "Update Successful!");
         return "redirect:/blog";
     }
+
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable int id,RedirectAttributes redirectAttributes){
+    public String delete(@PathVariable int id, RedirectAttributes redirectAttributes) {
         if (blogService.findById(id) == null) {
             redirectAttributes.addFlashAttribute("msg", "This blog not found!");
         } else {
