@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table,tr,th,td{
+            border-collapse: collapse;
+            border: black solid 1px;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <tr>
+        <th>STT</th>
+        <th>Book Title</th>
+        <th>Code</th>
+        <th>Borrowing day</th>
+        <th>Return date</th>
+    </tr>
+    <tr th:each="br, items: ${borrowingBooks}">
+        <td th:text="${items.count}"></td>
+        <td th:text="${br.book.bookName}"></td>
+        <td th:text="${br.borrowCode}"></td>
+        <td th:text="${br.borrowDay}"></td>
+        <td th:text="${br.returnDate}"></td>
+    </tr>
+</table>
+<button><a  href="/book" >Back</a></button>
+</body>
+</html>

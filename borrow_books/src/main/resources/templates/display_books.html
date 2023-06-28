@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table,tr,th,td{
+            border-collapse: collapse;
+            border: black solid 1px;
+        }
+    </style>
+</head>
+<body>
+<h4 style="color: red" th:text="${msg}"></h4>
+<button><a th:href="@{/book/create}">Create</a></button>
+<button><a href="/borrow/">Borrow List</a></button>
+<form action="/borrow/return">
+    <input type="number" name="code">
+    <button type="submit">Return</button>
+</form>
+<table>
+    <tr>
+        <th>STT</th>
+        <th>Name</th>
+        <th>Amount</th>
+    </tr>
+    <tr th:each="b, items : ${books}">
+        <td th:text="${items.count}"></td>
+        <td th:text="${b.bookName}"></td>
+        <td th:text="${b.amount}"></td>
+        <td><button><a th:href="@{/borrow/create/{id}(id=${b.bookId})}">Borrow</a></button></td>
+        <td><button><a th:href="@{/book/update/{id}(id=${b.bookId})}">Update</a></button></td>
+        <td><button><a th:href="@{/book/delete/{id}(id=${b.bookId})}">Delete</a></button></td>
+    </tr>
+</table>
+</body>
+</html>
