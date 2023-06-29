@@ -11,6 +11,5 @@ public interface IProductService {
     List<Product> getProducts();
     void add(Product product);
     void delete(int id);
-    Optional<Product> findById(int id);
-    Product find(int id);
+    Product findById(int id);
 }

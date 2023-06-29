@@ -3,12 +3,16 @@ package com.example.shopping_cart.controller;
 import com.example.shopping_cart.model.Cart;
 import com.example.shopping_cart.model.Product;
 import com.example.shopping_cart.service.IProductService;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.swing.text.html.Option;
 import java.util.Optional;
@@ -18,7 +22,11 @@ import java.util.Optional;
 @RequestMapping("/shopping")
 public class ProductController {
     @Autowired
+    HttpSession session;
+    @Autowired
     private IProductService productService;
+
+
 
     @ModelAttribute("cart")
     public Cart setupCart(){
@@ -46,10 +54,10 @@ public class ProductController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable int id,RedirectAttributes redirectAttributes){
-        if(productService.find(id)==null){
+        if(productService.findById(id)==null){
             redirectAttributes.addAttribute("msg","Not found");
         }else{
-            productService.find(id).setFlag(true);
+            productService.findById(id).setFlag(true);
             productService.delete(id);
             redirectAttributes.addAttribute("msg","Delete successfully");
         }
@@ -57,35 +65,18 @@ public class ProductController {
     }
 
     @GetMapping("/add/{id}")
-    public String addToCart(@PathVariable int id,@ModelAttribute Cart cart,RedirectAttributes redirectAttributes,@RequestParam("action") String action){
-        Optional<Product> product=productService.findById(id);
-        if(!product.isPresent() ) {
-            return "/error.404";
-        }
-        if (action.equals("show")) {
-            cart.addProduct(product.get());
-            return "redirect:/shopping-cart";
-        }
-        cart.addProduct(product.get());
+    public String addToCart(@SessionAttribute("cart") Cart cart,@PathVariable int id){
+        Product product=productService.findById(id);
+            cart.addProduct(product);
         return "redirect:/shopping";
     }
 
-    @GetMapping("/decrease/{id}")
-    public String decrease(@PathVariable int id,@ModelAttribute Cart cart,@RequestParam("action") String action){
-        Optional<Product> product=productService.findById(id);
-        if(!product.isPresent() ) {
-            return "/error.404";
-        }
-        if (action.equals("show")) {
-            cart.decreaseProduct(product.get());
-        }
-        cart.decreaseProduct(product.get());
-        return "redirect:/shopping-cart";
-    }
 
     @GetMapping("/pay")
     public String pay(Model model){
-        
+//        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+//        session= request.getSession();
+//        session.removeAttribute("cart");
         model.addAttribute("msg","Payment success");
         return "redirect:/shopping";
     }

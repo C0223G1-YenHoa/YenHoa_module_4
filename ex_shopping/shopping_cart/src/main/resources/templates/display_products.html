@@ -16,7 +16,7 @@
 <body>
 <div>
     <button><a href="/shopping/create">Create Product</a></button>
-    <button><a href="/shopping-cart"><i class="fa-solid fa-cart-shopping"></i></a></button>
+    <button><a href="/cart/shopping-cart"><i class="fa-solid fa-cart-shopping"></i></a></button>
 </div>
 <br>
 <h5 style="color: darkgreen" th:text="${msg}"></h5>
@@ -29,7 +29,7 @@
         <h5 class="card-title" th:text="${p.productName}"></h5>
         <p class="card-text" th:text="${p.description}"></p>
         <div class="row">
-        <a  class="btn btn-primary" th:href="@{/shopping/add/__${p.id}__(action='list')}">ADD TO CART</a>
+        <a  class="btn btn-primary" th:href="@{/shopping/add/{id}(id=${p.id})}">ADD TO CART</a>
         </div>
     </div>
 </div>

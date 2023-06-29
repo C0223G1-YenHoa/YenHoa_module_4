@@ -26,16 +26,12 @@ public class ProductService implements IProductService {
 
     @Override
     public void delete(int id) {
-        this.productRepo.save(find(id));
+        this.productRepo.save(findById(id));
     }
 
-    @Override
-    public Optional<Product> findById(int id) {
-            return this.productRepo.findById(id);
-    }
 
     @Override
-    public Product find(int id) {
+    public Product findById(int id) {
         try {
             return this.productRepo.findById(id).get();
         }catch (IllegalArgumentException e){

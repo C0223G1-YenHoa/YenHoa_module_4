@@ -55,7 +55,7 @@ public class Cart {
             Integer newQuantity = itemEntry.getValue() - 1;
             products.replace(itemEntry.getKey(),newQuantity);
         } else{
-            products.remove(itemEntry);
+                products.remove(itemEntry,0);
         }
     }
 
