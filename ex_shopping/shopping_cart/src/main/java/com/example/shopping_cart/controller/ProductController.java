@@ -14,18 +14,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.text.html.Option;
-import java.util.Optional;
+
 
 @Controller
 @SessionAttributes("cart")
 @RequestMapping("/shopping")
 public class ProductController {
-    @Autowired
-    HttpSession session;
+
     @Autowired
     private IProductService productService;
-
 
 
     @ModelAttribute("cart")
@@ -65,18 +62,19 @@ public class ProductController {
     }
 
     @GetMapping("/add/{id}")
-    public String addToCart(@SessionAttribute("cart") Cart cart,@PathVariable int id){
-        Product product=productService.findById(id);
-            cart.addProduct(product);
+    public String addToCart(@SessionAttribute("cart") Cart cart,@PathVariable int id,RedirectAttributes redirectAttributes){
+        if(productService.findById(id)==null){
+            redirectAttributes.addFlashAttribute("msg","Not found");
+        }else {
+            cart.addProduct( productService.findById(id));
+        }
         return "redirect:/shopping";
     }
 
 
     @GetMapping("/pay")
-    public String pay(Model model){
-//        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-//        session= request.getSession();
-//        session.removeAttribute("cart");
+    public String pay(Model model,HttpSession session){
+        session.invalidate();
         model.addAttribute("msg","Payment success");
         return "redirect:/shopping";
     }

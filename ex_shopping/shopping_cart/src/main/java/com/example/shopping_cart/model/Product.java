@@ -9,6 +9,7 @@ public class Product {
     private int id;
     private String productName;
     private float price;
+    @Column(columnDefinition = "longtext")
     private String description;
     @Column(columnDefinition = "mediumtext")
     private String image;
