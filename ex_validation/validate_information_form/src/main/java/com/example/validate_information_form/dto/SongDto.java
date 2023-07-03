@@ -35,7 +35,7 @@ public class SongDto {
         this.isFlag = isFlag;
     }
 
-    
+
     public boolean isFlag() {
         return isFlag;
     }
