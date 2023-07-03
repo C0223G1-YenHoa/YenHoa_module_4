@@ -11,6 +11,7 @@ public class Blog {
     private int id;
     private LocalDate date;
     private String title;
+    @Column(columnDefinition = "mediumtext")
     private String content;
     @Column(columnDefinition = "mediumtext")
     private String image;
