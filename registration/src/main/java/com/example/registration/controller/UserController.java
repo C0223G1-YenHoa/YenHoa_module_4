@@ -13,6 +13,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/user")
@@ -22,30 +24,29 @@ public class UserController {
 
 
     @GetMapping("")
-    public String success(){
+    public String success() {
         return "/success";
     }
 
     @GetMapping("/sign_in")
-    public String sign_in(Model model){
-        model.addAttribute("account",new Account());
+    public String sign_in(Model model) {
+        model.addAttribute("account", new Account());
         return "sign_in";
     }
 
     @PostMapping("/sign_in")
-    public String sign_in(@ModelAttribute Account account, RedirectAttributes redirectAttributes){
-//        User users=service.login(user.getEmail(),user.getPassword());
-        if(service.login(account.getEmail(),account.getPassword())!=null){
-            redirectAttributes.addFlashAttribute("msg","Congratulations, sign in successful.") ;
-        }else {
+    public String sign_in(@ModelAttribute Account account, RedirectAttributes redirectAttributes) {
+        if (service.login(account.getEmail(), account.getPassword()) != null && service.find(account.getEmail()).isEnabled()) {
+            redirectAttributes.addFlashAttribute("msg", "Congratulations, sign in successful.");
+        } else {
             redirectAttributes.addFlashAttribute("msg", "failed");
         }
         return "redirect:/user";
     }
 
     @GetMapping("create")
-    public String create(Model model){
-        model.addAttribute("user",new User());
+    public String create(Model model) {
+        model.addAttribute("user", new User());
         return "register_form";
     }
 
@@ -53,11 +54,23 @@ public class UserController {
     @PostMapping("/process_register")
     public String processRegister(User user, HttpServletRequest request)
             throws UnsupportedEncodingException, MessagingException {
-        service.create(new Account(user.getEmail(),user.getPassword()));
-        service.register(user);
-        String siteURL= getSiteURL(request);
-        service.sendVerificationEmail(user,siteURL);
-        return "/register_success";
+        if (service.find(user.getEmail()) != null) {
+            return "verify_fail";
+        } else {
+            service.create(new Account(user.getEmail(), user.getPassword()));
+            user.setExpiryDate(calculateExpiryDate());
+            service.register(user);
+            String siteURL = getSiteURL(request);
+            service.sendVerificationEmail(user, siteURL);
+            return "/register_success";
+        }
+    }
+
+    private Date calculateExpiryDate() {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.MINUTE, 1);
+        return new Date(cal.getTime().getTime());
     }
 
     private String getSiteURL(HttpServletRequest request) {
@@ -67,6 +80,7 @@ public class UserController {
 
     @GetMapping("/verify")
     public String verifyUser(@RequestParam("code") String code) {
+
         if (service.verify(code)) {
             return "verify_success";
         } else {
@@ -74,4 +88,39 @@ public class UserController {
         }
     }
 
+    @GetMapping("/verifyReset")
+    public String verifyReset(@RequestParam("code") String code,Model model) {
+        String email=null;
+        if(service.findByVerificationCode(code)!=null) {
+            User user = service.findByVerificationCode(code);
+            email = user.getEmail();
+        }
+        if (service.verifyReset(code)) {
+            User user1=service.find(email);
+            model.addAttribute("user",user1);
+            return "reset_pw";
+        } else {
+            return "verify_fail";
+        }
+    }
+
+    @GetMapping("/email")
+    public String email() {
+        return "email_reset_pw";
+    }
+
+    @PostMapping("/reset_pw")
+    public String reset_pw(@RequestParam("email") String email, HttpServletRequest request) throws MessagingException, UnsupportedEncodingException {
+        User user = service.find(email);
+        user.setExpiryDate(calculateExpiryDate());
+        service.reset(user);
+        String siteURL = getSiteURL(request);
+        service.sendVerificationReset(user, siteURL);
+        return "success";
+    }
+    @PostMapping("/new_pw")
+    public String new_pw(@RequestParam("new_pw")String new_pw,@ModelAttribute User user){
+        service.reset_pw(user, new_pw);
+        return "verify_success";
+    }
 }

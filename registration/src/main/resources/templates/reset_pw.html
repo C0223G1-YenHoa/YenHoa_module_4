@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/user/new_pw" method="post" th:object="${user}" >
+    <h1 th:text="${user.email}"></h1>
+    <input type="hidden" th:field="*{email}">
+    <input placeholder="enter new password" name="new_pw"/>
+    <button type="submit">submit</button>
+</form>
+</body>
+</html>
